@@ -18,8 +18,8 @@ def rndColor2():
     return (random.randint(32, 127), random.randint(32, 127), random.randint(32, 127))
 
 # 240 x 60:
-width = 60 * 4
-height = 60
+width = 2000 * 1
+height = 900 * 1
 image = Image.new('RGB', (width, height), (255, 255, 255))
 # 创建Font对象:
 font = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSans.ttf', 36)
@@ -34,4 +34,4 @@ for t in range(4):
     draw.text((60 * t + 10, 10), rndChar(), font=font, fill=rndColor2())
 # 模糊:
 image = image.filter(ImageFilter.BLUR)
-image.save('code.jpg', 'jpeg')
+image.save('/root/Desktop/code.jpg', 'jpeg')

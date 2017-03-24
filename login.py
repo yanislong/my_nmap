@@ -23,10 +23,13 @@ def login(name,passwd):
                 print "login ok"
                 print u"************机密文件*************"
                 print i
+                f.tell()
+                f.read()
                 print "*********************************"
                 break
             else:
-                print "worry about"
+                print "wait..."
+        print "username or password is worry"
     f.close()
 
 while True:
