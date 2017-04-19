@@ -20,7 +20,10 @@ def open():
     global err
     for i in range(1):
         start = time.time()
-        r = requests.get(url1, timeout=30)
+        try:
+            r = requests.get(url1, timeout=30)
+        except ConnectionError:
+            print 'start threading is false'
         if r.status_code == 200:
             end = time.time()
             shijian = end - start
@@ -59,7 +62,7 @@ result2 = m.test1()
 ll = threading.Lock()
 def oo():
     job = []
-    for i in range(100):
+    for i in range(50):
         t = threading.Thread(target=open,args=())
         t.start()
         print 'xiancheng count:',threading.active_count()
@@ -94,6 +97,7 @@ print 'result is qsize():',result.qsize()
 print 'result2 is qsize():',result2.qsize()
 num = 0
 shibai = 0
+
 while not result.empty():
     r = result.get(timeout=10)
     print r
