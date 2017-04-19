@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding=utf-8 -*-
 
+import time
+import sys
 import requests, bs4, re
 
 def access_pro():
@@ -10,12 +12,26 @@ def access_pro():
     header['Referer'] = ""
     r = requests.get(url, headers=header)
     html = bs4.BeautifulSoup(r.content)
-    tt = html.find('table').findall('tr')
-    print tt
+    tt = html.find('table').find_all('tr')
+    n = 0
+    ll = []
     for i in tt:
-        print i.td.next_elements
-        print '\n'
+        for j in i.contents:
+            if type(j) != bs4.element.NavigableString:
+#                print j.string
+                ll.append(j.string)
+        print '*****************'
         n += 1
-    print n
+#    print ll
+    for l in range(11,10000,10):
+        try:
+            print ll[l]
+            print ll[l+1]
+            print ll[l+4]
+        except:
+            print "quit"
+            sys.exit()
+#    for k in ll:
+#        print k
 
 access_pro()
