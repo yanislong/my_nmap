@@ -20,6 +20,7 @@ def access_pro(num=1):
         for j in i.contents:
             if type(j) != bs4.element.NavigableString:
                 ll.append(j.string)
+    n = 0
     for l in range(11,1000,10):
         try:
             ip = []
@@ -29,8 +30,8 @@ def access_pro(num=1):
             ip.append(ll[l])
             ip.append(ll[l+1])
             ip.append(ll[l+4])
-            for i in range(400):
-                data[i] = ip
+            data[n] = ip
+            n += 1
         except:
             print "quit"
 #            sys.exit()
@@ -38,6 +39,6 @@ def access_pro(num=1):
             with open('data.txt' + str(num),'w') as ff:
                 json.dump(data,ff)
 
-for i in range(1,10):
+for i in range(1,4):
     print i
     access_pro(i)
