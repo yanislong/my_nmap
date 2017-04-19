@@ -9,7 +9,7 @@ with open('data.txt1','r') as f:
 
 url = "http://dev.www.xueguoxue.com"
 header = {}
-for i in range(3):
+for i in range(10):
     i = str(i)
     print ip[i][0]
     print ip[i][1]
@@ -18,5 +18,9 @@ for i in range(3):
     try:
         r = requests.get(url, proxies=proxie, timeout=10)
         print r.content
+        print "**********************************************************"
+        if r.status_code == 200:
+            with open('keyong.txt','a') as ff:
+                json.dump(proxie,ff)
     except:
         print "tiaoguo"
