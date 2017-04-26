@@ -27,7 +27,7 @@ def result(num):
 #        print type(p)
         n += 1
         try:
-            r1 = requests.get('http:' + p['src']).content
+            r1 = requests.get('http:' + p['src'],timeout=10).content
         except equests.exceptions.ConnectionError:
             print 'Connection aborted. gaierror(-2, Name or service not known)'
         with open('/root/Desktop/tu5/' + str(n) + ".jpg", 'wb') as f:
