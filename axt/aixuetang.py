@@ -69,6 +69,6 @@ def a_xgx():
     cur.close()
     conn.close()
 
-for i in range(29):
-    aixuetang()
+for i in range(10,29):
+    aixuetang(i)
 #a_xgx()

@@ -51,19 +51,11 @@ def access_pro(num=1):
             if str(html.title.string) == "百度一下，你就知道":
                 rrrr = requests.get('http://dev.www.xueguoxue.com', headers=header, proxies=proxie, timeout=5)
                 print rrrr.headers
-            ip = []
             print proxie
             print ll[l]
             print ll[l+2]
             print ll[l+4][0]
             print ll[l+8]
-            if ll[l]:
-                ip.append(ll[l])
-                ip.append(ll[l+2])
-                ip.append(ll[l+4])
-                ip.append(ll[l+8])
-                data[n] = ip
-                n += 1
         except KeyboardInterrupt:
             print "quit"
 #            sys.exit()
