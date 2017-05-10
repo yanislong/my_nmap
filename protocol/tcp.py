@@ -5,8 +5,8 @@ from scapy.all import *
 import time
 import os
 
-host = "172.16.9.238"
-sp = 12782
+host = "172.16.9.238"  #请求地址
+sp = 12782  #自己使用tcp的源端口
 
 try:
     os.system("iptables -D OUTPUT 1")
@@ -24,7 +24,7 @@ send(request2)
 #request3 = IP(dst=host)/TCP(dport=80,sport=sp,flags='PA',ack=response[1].seq+1,seq=response[1].ack)/Raw('GET / HTTP/1.1\r\nHost:172.16.9.238\r\n\r\n') #定义http请求包
 
 #send(request3)
-#response2 = sr1(request2)    #获取seq,完成3次握手
+#response2 = sr1(request2)
 
 time.sleep(1)
 
@@ -33,7 +33,6 @@ send(request4)
 request5 = IP(dst="172.16.9.238")/TCP(dport=80,sport=sp,flags='A',seq=response[1].ack+1,ack=response[1].seq+2)  #客户端回复ACK应答包，四次握手最后一个包
 send(request5)
 
-#response3 = sr1(request3)
 #bb = sniff(count=5,filter="tcp and host 172.16.9.238 and port 80")
 #for i in bb:
 #    print i[0][0]
