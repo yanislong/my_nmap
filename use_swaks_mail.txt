@@ -1,6 +1,9 @@
 swaks --from 1@bb.com --to 335916781@qq.com --header 'hello' --body 'hello long'
 
+
 swaks --from xuelong@xueguoxue.net --to 759204840@qq.com --ehlo qq.com --header 'liangfengjie' --body '凤杰周六日来加班'
+
+swaks --from xuelong@xueguoxue.net --to 335916781@qq.com --ehlo qq.com --header 'liangfengjie' --body '凤杰周六日来加班'
 
 
 

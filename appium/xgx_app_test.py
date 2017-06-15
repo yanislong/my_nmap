@@ -23,33 +23,33 @@ def forgetPasswd(phone="",code=""):
     dd.find_element_by_name(u'忘记密码').click()
 #    time.sleep(1)
 #    tt = time.strftime("%Y-%m-%d_%H:%M:%S",time.localtime())
-#    dd.get_screenshot_as_file(r'/root/Desktop/app_tu/' + tt + '.png')
+#    dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/' + tt + '.png')
     dd.find_element_by_xpath('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText').send_keys(phone)
     dd.find_element_by_name(u'发送验证码').click()
     time.sleep(1)
     tt = time.strftime("%Y-%m-%d_%H:%M:%S",time.localtime())
     if re.findall(r'^\d{11}$',phone):
-        dd.get_screenshot_as_file(r'/root/Desktop/app_tu/activePhone/' + tt + '.png')
+        dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/activePhone/' + tt + '.png')
     else:
-        dd.get_screenshot_as_file(r'/root/Desktop/app_tu/invalidPhone/' + tt + '.png')
+        dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/invalidPhone/' + tt + '.png')
     dd.find_element_by_xpath('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText').send_keys(code)
     time.sleep(1)
     tt = time.strftime("%Y-%m-%d_%H:%M:%S",time.localtime())
-    if re.findall(r'^\d{6}$',code):
-        dd.get_screenshot_as_file(r'/root/Desktop/app_tu/activeCode/' + tt + '.png')
+    if re.findall(r'\d{6}',code):
+        dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/activeCode/' + tt + '.png')
     else:
-        dd.get_screenshot_as_file(r'/root/Desktop/app_tu/invalidCode/' + tt + '.png')
+        dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/invalidCode/' + tt + '.png')
     dd.find_element_by_xpath('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[4]/android.widget.EditText').send_keys('1314103257a6')
 #    time.sleep(1)
 #    tt = time.strftime("%Y-%m-%d_%H:%M:%S",time.localtime())
-#    dd.get_screenshot_as_file(r'/root/Desktop/app_tu/' + tt + '.png')
+#    dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/' + tt + '.png')
     dd.find_element_by_name(u'确定').click()
 #    time.sleep(1)
 #    tt = time.strftime("%Y-%m-%d_%H:%M:%S",time.localtime())
-#    dd.get_screenshot_as_file(r'/root/Desktop/app_tu/' + tt + '.png')
+#    dd.get_screenshot_as_file(r'/root/Desktop/forgetpw/' + tt + '.png')
     dd.quit()
 
 if __name__ == "__main__":
-    plist = ["1","131123451234","","131123a456","!@#","``","''","$nbsp","13166666666"]
+    plist = ["1","131123451234","","131123a456","!@#","``","''","$nbsp","13166666666","13112341234"]
     for i in plist:
         forgetPasswd(i,str(random.randint(10000,9999999)))

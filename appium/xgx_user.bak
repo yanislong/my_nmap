@@ -1,0 +1,39 @@
+#!/usr/bin/python
+# -*- coding=utf-8 -*-
+
+from appium import webdriver
+import time
+
+phone = {}
+phone['platformName'] = "Android"
+phone['platformVersion'] = '4.2.0'
+phone['deviceName'] = "Meizu"
+phone['unicodeKeyboard'] = True
+phone['resetKeyboard'] = True
+phone['appPackage'] = 'com.xueguex'
+phone['appActivity'] = 'com.xueguoxue.MainActivity'
+
+dd = webdriver.Remote('http://172.16.20.92:4723/wd/hub', phone)
+w = dd.get_window_size()['width']
+h = dd.get_window_size()['height']
+time.sleep(5)
+print w
+print h
+dd.find_element_by_name(u'我的').click()
+time.sleep(2)
+dd.find_element_by_name(u'我的订单').click()
+time.sleep(1)
+for i in range(400):
+    dd.swipe(w * 0.5, h * 0.75, w * 0.5, h * 0.25,500)
+    time.sleep(3)
+    dd.swipe(w * 0.5, h * 0.3, w * 0.5, h * 0.5,300)
+print "swipe"
+time.sleep(1)
+dd.find_element_by_xpath('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ImageView').click()
+#dd.find_element_by_xpath('//android.widget.HorizontalScrollView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.widget.ImageView').click()
+dd.find_element_by_name(u'我的课程').click()
+for i in range(20):
+    dd.swipe(w * 0.5, h*0.75, w * 0.5, h * 0.25,500)
+    time.sleep(1)
+time.sleep(300)
+dd.quit()
