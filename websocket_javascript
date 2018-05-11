@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+    <meta http-equiv="content-type" content="text/html" />  
+    <meta name="author" content="https://www.baidu.com" />  
+    <title>websocket test</title>  
+    <script>
+        var socket;  
+        function Connect(){  
+            try{  
+                socket=new WebSocket('');  
+            }catch(e){  
+                alert('error');  
+                return;
+            }  
+            socket.onopen = sOpen;  
+            socket.onerror = sError;	
+            socket.onmessage= sMessage;
+            socket.onclose= sClose;
+        }  
+        function sOpen(){
+           // alert('connect success!');
+		   var mess = 'message:{"type":"updateMatchInfo","content":{"openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE","level":"1","challengeLevel":"1"}}';
+		  // var mess = JSON.stringify('message:{"type":"updateMatchInfo","content":{"openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE","level":"1","challengeLevel":"1"}}');
+		  // var mess = JSON.parse('"message":{"type":"updateMatchInfo","content":{"openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE","level":"1","challengeLevel":"1"}}');
+		  //var mess = 'message:{"type":"matchFriend","content":{"roomName":"","openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE"}}'
+		   //alert(mess);
+			socket.send(mess);
+			}
+        function sError(e){
+            alert("error " + e);
+			console.log(e.data);	
+        }
+        function sMessage(msg){
+            console.log(msg.data); 		
+            //alert('server says:' + msg);
+			//console.log(msg.data.length);
+            //alert(typeof msg.data);
+			//alert(msg.data);
+			//console.log(`${msg.data.split('message:')[1]}`);
+			//console.log(xiti);
+            //console.log(xiti.content.roomName);
+			if (msg.data.length > 100){
+			var xt = JSON.parse(`${msg.data.slice(8)}`);
+			if(xt.content.question.question_id){
+			var xiti = JSON.parse(`${msg.data.slice(8)}`);
+			//console.log(xiti.content.question.options);
+			sel = xiti.content.question.options;
+			let obj1 = sel.filter((val, index) => {
+            return val.right;
+        })
+		    //console.log(obj1[0].value);
+			//console.log(xiti);
+			//console.log(xiti.content.question.question_id);
+            var huida = {"type":"robotAnswer","content":{"choice":{"openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE","userChoose":"爬","scoreMyself":100,"answerTime":5000,"answer":{"answerTime":1000}},"challengeLaevel":2}};
+			huida.content.roomName = xiti.content.roomName;
+			huida.content.choice.questionId = xiti.content.question.question_id;
+			huida.content.choice.answer.choose = obj1[0].value;
+			huida.content.choice.options = sel;
+			var hd = 'message:' + JSON.stringify(huida);
+			console.log(hd);
+            Send(hd);
+           // alert(1);
+			}	
+            }			
+        }
+        function sClose(e){
+            alert("connect closed:" + e.code);
+        }  
+        function Send(){
+            socket.send('message:{"type":"fightingResult","content":{"openId":"o0_AI0fHV11xknP9PtkhsKI5JHzE","fightingResult":0}}');
+			//var file = document.querySelector('input[type="file"]').files[0];
+			//var img = CanvasRenderingContext2D.getImageData(0,0,400,320);
+			//var binary = new Uint8Array(img.data.length);
+			//for (var i = 0; i<img.data.length;i++){
+			 //   binary[i]=img.data[i];
+			 //   }
+			//socket.send(binary.buffer);
+        } 
+        function Close(){
+            socket.close();
+        } 
+        function ping(){
+            setInterval(function (){socket.send(document.getElementById("ping").value);socket.send("ping")},5000);
+        }		
+    </script>
+</head>   
+<body>  
+<input id="msg" type="text">  
+<button id="connect" onclick="Connect();">Connect</button>  
+<button id="send" onclick="Send();">Send</button>  
+<button id="close" onclick="Close();">Close</button>
+<button id="ping" value='message:{type:"PONG", content:{openId:"o0_AI0fHV11xknP9PtkhsKI5JHzE"}}' onclick="ping();">ping</button>
+</body>    
+</html>
