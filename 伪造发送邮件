@@ -1,0 +1,33 @@
+#!/usr/bin/python
+# -*-coding=utf-8 -*-
+
+from email.mime.text import MIMEText
+from email .header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+import smtplib
+
+
+def _format_addr(s):
+    name, addr = parseaddr(s)
+    return formataddr((Header(name,'utf-8').encode(),addr.encode('utf-8') if isinstance(addr, unicode) else addr))
+
+msg = MIMEText("王大龙同志，由于本年度表现优异19年度工资将涨幅50%，并颁发18年全额年终奖，祝大龙同志再接再厉",'plain',"utf-8")
+msg['From'] = _format_addr('梁凯<liangkai@newbeescm.com>')
+msg['To'] = _format_addr('<wangdalong@newbeescm.com>')
+msg['Subject'] = Header('薪资调整','utf-8').encode()
+
+#taddr = "335916781@qq.com"
+#taddr = "wangdalong@newbeescm.com"
+taddr = "lihailong@newbeescm.com"
+faddr = "251737718@qq.com"
+passwd = raw_input("emaill passwd:")
+passwd = "avzktjpuxojgbjig"
+
+#server = smtplib.SMTP("smtp.qq.com", 25)
+server = smtplib.SMTP("mxbiz1.qq.com", 25)
+server.ehlo()
+server.starttls()
+server.set_debuglevel(1)
+server.login(faddr, passwd)
+server.sendmail(faddr, [taddr], msg.as_string())
