@@ -22,7 +22,7 @@ msg['Subject'] = Header('薪资调整','utf-8').encode()
 taddr = "lihailong@newbeescm.com"
 faddr = "251737718@qq.com"
 passwd = raw_input("emaill passwd:")
-passwd = "avzktjpuxojgbjig"
+passwd = "avzktjpuxo"
 
 #server = smtplib.SMTP("smtp.qq.com", 25)
 server = smtplib.SMTP("mxbiz1.qq.com", 25)
