@@ -31,3 +31,31 @@ server.starttls()
 server.set_debuglevel(1)
 server.login(faddr, passwd)
 server.sendmail(faddr, [taddr], msg.as_string())
+
+"""
+
+swaks --to hui*****@163.com --from **wang@sys**w.com --data Downloads/readmail.txt --header "Subject: 来自大司马的问候"
+
+txt:
+X-QQ-SPAM: true
+X-QQ-FEAT: QX/rXDl9P1sSARkqBolR2q1eO2CCGMmNjDAo+RUeLbQLXe+K1lIStEdVs96q6
+        hA2xB+xn/ieNNnIH3liA2GnBA2BZnj6N1Xi7/ABKJNBXEk/efkhpqsglReKfDEBOIftG7Zw
+        UCssO0jDntwlAc1fqkWDt7Ye6NSHLH2Jt7eAR+X/psN69KaOO6nX21/JAQPHedYOgDJaWyK
+        apqvkH5aglWqQEtzl6kC1f/3ccTq7o3MtZZ4ufU0iifxgPw2tDXG1Ek6YjMpdxeHJffBnny
+        ok3NgldejXW/KH
+X-QQ-MAILINFO: ODvMQTwIxEi3Xle2Bsakmkgp3GuZMrJq2O7pbs2p4EJLLfoZOrwdbgVss
+        xc+7OIWr3YRvu/mJ/pTb6rJn6iTdjWPlQvko5nzGHaNSALqe55CdnuvPtak2ZGYY04/UdqF
+        1YNdmBmh89C95btR+2dDnpq7jx+0XJTpj0qkdecm0OW7Ca+t8xBjxILwwUSgn4KZlFBTgAa
+        uiFZC
+X-QQ-mid: mx33t1545705749tm7k9skw0
+X-QQ-ORGSender: liangkai@newbeescm.com
+Date: Tue, 25 Dec 2018 10:42:30 +0800
+From: liangkai@newbeescm.com
+Subject: test Tue, 25 Dec 2018 10:42:30 +0800
+X-Mailer: swaks v20130209.0 jetmore.org/john/code/swaks/
+转正通知
+
+汪占霞女士您已通过试用期考核，现已成为蜂网正式员工
+
+
+"""
