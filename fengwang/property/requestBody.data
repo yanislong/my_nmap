@@ -1,0 +1,9 @@
+{
+  "groupId": 0,
+  "memberCard": "string",
+  "memberId": 0,
+  "memberMobile": "string",
+  "memberName": "string",
+  "orgId": 0,
+  "userId": "string"
+}
