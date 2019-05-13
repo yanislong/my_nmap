@@ -20,7 +20,7 @@ msg['Subject'] = Header('薪资调整','utf-8').encode()
 #taddr = "335916781@qq.com"
 #taddr = "wangdalong@newbeescm.com"
 taddr = "lihailong@newbeescm.com"
-faddr = "251737718@qq.com"
+faddr = "335916781@qq.com"
 passwd = raw_input("emaill passwd:")
 passwd = "avzktjpuxo"
 
