@@ -1,0 +1,104 @@
+#统计请求响应时间
+import pycurl
+import sys 
+import json
+from io import BytesIO
+
+WEB_SITES = "http://192.168.15.21:7777/login"#sys.argv[1]
+
+def main():
+    c = pycurl.Curl()
+    c.setopt(pycurl.URL, WEB_SITES)              #set url
+    c.setopt(pycurl.FOLLOWLOCATION, 1)
+    buffer = BytesIO()
+    c.setopt(c.WRITEDATA,buffer)
+    content = c.perform()                        #execute 
+    dns_time = c.getinfo(pycurl.NAMELOOKUP_TIME) #DNS time
+    conn_time = c.getinfo(pycurl.CONNECT_TIME)   #TCP/IP 3-way handshaking time
+    starttransfer_time = c.getinfo(pycurl.STARTTRANSFER_TIME)  #time-to-first-byte time
+    total_time = c.getinfo(pycurl.TOTAL_TIME)  #last requst time
+    c.close()
+
+    data = json.dumps({'dns_time':dns_time,         
+                       'conn_time':conn_time,        
+                       'starttransfer_time':starttransfer_time,    
+                       'total_time':total_time})
+    return data
+
+if __name__ == "__main__":    
+    print(main())
+    
+    
+    
+    
+    ##############多进程在windows下用法，需要在cmd中运行#######
+    ## 额外导入 freeze_support
+import time, sys, queue, os
+from multiprocessing.managers import BaseManager
+import userInfo
+import threading
+from multiprocessing import Process, freeze_support
+
+# 从task队列取任务,并把结果写入result队列:
+def prun(rept,cname,task,result,errnum):
+    cn = 8
+    try:
+        n = task.get(timeout=30)
+    except queue.Empty:
+        return None
+    if n == "start":
+        result.put(cname + '-start')
+        ln = []
+        for i in range(cn):
+            print('client total:%d'%i)
+            t = threading.Thread(target=userInfo.modifyUserInfo,args=(rept,cname,errnum))
+            ln.append(t)
+            t.start()
+        for j in ln:
+            j.join()
+        result.put(cname + '-end')
+    elif n == "stop":
+        return None
+    else:
+        print('param errer')
+        return None
+
+if __name__ == "__main__":
+    pl = []
+    print("main pid: ",os.getpid())
+    cname = 'client1'
+    server_addr = '10.0.112.90'
+    # 创建类似的QueueManager:
+    class QueueManager(BaseManager):
+        pass
+    # 由于这个QueueManager只从网络上获取Queue，所以注册时只提供名字:
+    QueueManager.register('get_task_queue')
+    QueueManager.register('get_result_queue')
+    QueueManager.register('get_rept_queue')
+    QueueManager.register('get_err_queue')
+    # 连接到服务器，也就是运行task_master.py的机器:
+    print('Connect to server %s...' % server_addr)
+    # 端口和验证码注意保持与task_master.py设置的完全一致:
+    m = QueueManager(address=(server_addr, 5000), authkey=b'abc')
+    # 从网络连接:
+    while True:
+        try:
+            m.connect()
+            break
+        except ConnectionRefusedError:
+            continue
+    # 获取Queue的对象:
+    task = m.get_task_queue()
+    result = m.get_result_queue()
+    rept = m.get_rept_queue()
+    errnum = m.get_err_queue()
+    for k in range(10):
+        for i in range(10):
+            freeze_support()
+            p = Process(target=prun,args=(rept,cname,task,result,errnum))
+            pl.append(p)
+            p.start()
+        for j in pl:
+            j.join()
+    # 处理结束:
+    print('worker exit.')
