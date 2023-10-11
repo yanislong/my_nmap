@@ -1,0 +1,68 @@
+from smsactivate.api import SMSActivateAPI
+import openai
+import requests
+
+open_key = "sk-N7NXrBNcduhQmf4uzIxgT3BlbkFJxW71Jc5bHyAaBVS4" #openaikey
+
+openai.api_key = open_key
+modelAi = "gpt-3.5-turbo"
+#modelAi = "gpt-4-0613"
+content = ""
+#response = openai.ChatCompletion.create(model=modelAi,messages=[{"role":"user","content": content}])  #聊天对话
+response = openai.Image.create(prompt="dog",n=1,size="1024x1024")  #生成图片
+print(response)
+#print(response['choices'][0]['message']['content'])
+
+
+#https://sms-activate.org/cn/freePrice#activation  qq登陆
+APIKEY = "dB33dcf0dBf30f308474543"  SMSkey
+#sa = SMSActivateAPI(APIKEY)
+#sa.debug_mode = True
+#print(sa.version())
+#print(dir(sa))
+#print(sa.getCountries())
+#print(sa.getNumber())
+
+def sendsms():
+    url = "https://api.sms-activate.org/stubs/handler_api.php"
+    param = {}
+    param['api_key'] = APIKEY
+    #param['action'] = "getActiveActivations"
+    param['action'] = "getNumber"
+    param["country"] = 3
+    #param['operator'] = "17344432202"
+    param["service"] = "mm"
+    #param["freePrice"] = False
+    r = requests.get(url, params=param)
+    print(r.content)
+    #print(r.status_code)
+    #print(r.url)
+    try:
+        print(r.text.split(":")[1])
+        return r.text.split(":")[1]
+    except IndexError:
+        return None
+    
+def getStatus():
+    url = "https://api.sms-activate.org/stubs/handler_api.php"
+    param = {}
+    param['api_key'] = APIKEY
+    param['action'] = "getStatus"
+    param["id"] = "1804577343"
+    while True:        
+        r = requests.get(url, params=param)
+        if r.text == "STATUS_OK":
+            print(r.text)
+            break
+        else:
+            print(r.text)
+            break
+            try:
+                param["id"] = sendsms()
+            except IndexError:
+                print("没返回号码")
+                break            
+    
+#sendsms()
+#getStatus()
+
