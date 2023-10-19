@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket聊天室</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #chat {
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+<h1>WebSocket聊天室</h1>
+<div id="chat"></div>
+<textarea id="message"></textarea>
+<button onclick="sendMessage()">发送</button>
+<script type="text/javascript">
+    var socket = new WebSocket("ws://192.168.97.43:8080/chat");
+    var chat = document.getElementById("chat");
+    var message = document.getElementById("message");
+
+    socket.onmessage = function(event) {
+        chat.innerHTML += "<p>" + event.data + "</p>";
+    };
+
+    function sendMessage() {
+        socket.send(message.value);
+        message.value = "";
+    }
+</script>
+</body>
+</html>
